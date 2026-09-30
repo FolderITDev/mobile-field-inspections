@@ -1,0 +1,50 @@
+{
+  "expo": {
+    "name": "Field Inspections",
+    "slug": "mobile-field-inspections",
+    "version": "0.1.0",
+    "scheme": "fieldinspections",
+    "userInterfaceStyle": "automatic",
+    "orientation": "default",
+    "icon": "./assets/icon.png",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "net.folderit.fieldinspections"
+    },
+    "android": {
+      "package": "net.folderit.fieldinspections",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#1D5B4F"
+      }
+    },
+    "web": {
+      "output": "single",
+      "favicon": "./assets/icon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 112,
+          "resizeMode": "contain",
+          "backgroundColor": "#1D5B4F"
+        }
+      ],
+      "expo-sqlite",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Choose a photo of a finding. It is copied into Field Inspections and stays on this device.",
+          "cameraPermission": "Field Inspections uses the camera to photograph inspection findings. Photos stay on this device.",
+          "microphonePermission": false
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

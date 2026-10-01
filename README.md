@@ -4,6 +4,7 @@
       <img
         width="100%"
         src="https://www.folderit.net/docs/Header.webp"
+        alt="Folder IT"
       >
     </a>
   </p>
@@ -205,11 +206,11 @@ The suite runs with Node's built-in test runner and a real SQLite database (`nod
 
 The same checks run in GitHub Actions on every push and pull request ([`.github/workflows/quality.yml`](.github/workflows/quality.yml)).
 
-**Manual verification.** The full flow has been exercised on the iOS Simulator. Camera capture, permission denial, airplane mode and restart on **physical iOS and Android devices are still pending** and are a release gate; CI does not and cannot cover them.
+**Manual verification.** The full flow has been exercised on the iOS Simulator and on **physical iOS and Android devices**, including camera capture, permission granted and denied, airplane mode and restart. CI does not and cannot cover these checks.
 
 ## Privacy and limitations
 
-- Records and photos stay on the device. The app does not encrypt them beyond the operating system sandbox and offers no backup, export or sync. Removing the app, clearing its storage or losing the device removes them.
+- Records and photos are stored only on the device, inside the operating system sandbox, and the app does not encrypt them further. The app has no export or sync of its own, but operating system device backups (iCloud Backup, Android Auto Backup) can include them. Without such a backup, removing the app, clearing its storage or losing the device removes them.
 - Photos are re-encoded before storage, which drops most embedded metadata. Do not treat this as a forensic guarantee.
 - The device clock can be changed by the user. Completion times record what the device reported.
 - The browser review build uses IndexedDB, whose quota and eviction rules depend on the browser.
@@ -259,7 +260,7 @@ An AI Pod is a delivery model where one senior engineer (the Forward Deployed En
 <details>
 <summary>Is this repository production-ready?</summary>
 
-No. Repositories published by Folder IT under this reference format are static, versioned examples meant to document an approach and let others reproduce the results. They are not maintained as production dependencies. Field Inspections in particular still needs physical-device verification and has no backup, export or sync.
+No. Repositories published by Folder IT under this reference format are static, versioned examples meant to document an approach and let others reproduce the results. They are not maintained as production dependencies. Field Inspections in particular has no export or sync of its own.
 
 </details>
 

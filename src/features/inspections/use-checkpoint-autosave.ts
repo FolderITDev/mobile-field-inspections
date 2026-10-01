@@ -26,26 +26,44 @@ export function useCheckpointAutosave(inspectionId: string, key: string) {
   const [error, setError] = useState<string | null>(null);
   const pending = useRef<Patch>({});
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  /** The write under way, if any. At most one runs at a time. */
+  const inflight = useRef<Promise<boolean> | null>(null);
 
+  const write = useCallback(
+    async (patch: Patch): Promise<boolean> => {
+      setStatus('saving');
+      setError(null);
+      try {
+        await change(inspectionId, (old) => saveAnswer(old, key, patch));
+        if (Object.keys(pending.current).length === 0) setStatus('saved');
+        return true;
+      } catch (e) {
+        pending.current = { ...patch, ...pending.current };
+        setStatus('failed');
+        setError(message(e));
+        haptics.error();
+        return false;
+      }
+    },
+    [change, inspectionId, key],
+  );
+
+  /**
+   * Resolves `true` only once every change so far is on disk, including a
+   * write another call already started; leaving early could lose it.
+   */
   const flush = useCallback(async (): Promise<boolean> => {
     clearTimeout(timer.current);
+    while (inflight.current) if (!(await inflight.current)) return false;
     const patch = pending.current;
     if (Object.keys(patch).length === 0) return true;
     pending.current = {};
-    setStatus('saving');
-    setError(null);
-    try {
-      await change(inspectionId, (old) => saveAnswer(old, key, patch));
-      if (Object.keys(pending.current).length === 0) setStatus('saved');
-      return true;
-    } catch (e) {
-      pending.current = { ...patch, ...pending.current };
-      setStatus('failed');
-      setError(message(e));
-      haptics.error();
-      return false;
-    }
-  }, [change, inspectionId, key]);
+    const current: Promise<boolean> = write(patch).finally(() => {
+      if (inflight.current === current) inflight.current = null;
+    });
+    inflight.current = current;
+    return current;
+  }, [write]);
 
   const update = useCallback(
     (patch: Patch, { debounce = false } = {}) => {

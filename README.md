@@ -86,7 +86,7 @@ This repository is one example of that work: **Field Inspections**, an offline a
   <img src="docs/screenshots/04-review.png" width="200" alt="Review screen for Riverside depot with 6 passed, 1 needs attention and 1 not applicable, the emergency exits finding with its note and photo, and a Complete inspection button." />
 </p>
 
-<sub>Captured on the iOS Simulator (iPhone 17 Pro, iOS 26.5) from a development build of this repository. The site and notes are fictional; the photo is an original synthetic illustration used as test media. The home capture is cropped to the draft card.</sub>
+<sub>Captured on the iOS Simulator (iPhone 17 Pro, iOS 26.5) from a development build of this repository. The site and notes are fictional; the photo is an original synthetic illustration used as test media. Below the draft card the home screen shows only its background, which the home capture reproduces at full screen height.</sub>
 
 ## Install
 
